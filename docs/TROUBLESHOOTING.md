@@ -1,49 +1,51 @@
 # Troubleshooting
 
-## Python is not recognized
+## Node is not recognized
 
-Install Python 3.10 or newer from the official Python website. On Windows, enable the "Add Python to PATH" checkbox during installation.
+Install Node.js 20.18 or newer from the official Node.js website, then restart your terminal.
 
-## PowerShell blocks the setup script
+## Dependencies fail to install
 
-Run this command inside the project folder:
+Delete `node_modules` and reinstall:
 
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\scripts\setup_windows.ps1
+```bash
+npm install
 ```
 
-## The app says a dependency is missing
+## Prisma client is missing
 
 Run:
 
 ```bash
-python run.py --install
+npx prisma generate
 ```
 
-Or install manually:
+## Port 3000 is already in use
+
+Run on another port:
 
 ```bash
-python -m pip install -r requirements.txt
+npm run dev -- -p 3001
 ```
 
-## Port 8501 is already in use
+## PDF upload fails
 
-Run the app on another port:
+Some PDFs are scanned images or encrypted. Paste the resume text manually, or convert the file to a text-based PDF or DOCX.
+
+## DOCX upload fails
+
+Make sure the file is a valid `.docx`, not the older `.doc` format.
+
+## Build fails because environment variables are missing
+
+Copy `.env.example` to `.env.local` and update values as needed:
 
 ```bash
-python run.py --port 8502
+copy .env.example .env.local
 ```
 
-## PDF upload does not extract text correctly
-
-Some resumes are image-only scanned PDFs. Convert the resume to a text-based PDF, DOCX, or paste the resume text into the app.
-
-## Virtual environment is broken
-
-Delete the `.venv` folder and run setup again:
+On macOS/Linux:
 
 ```bash
-python -m venv .venv
-python -m pip install -r requirements.txt
+cp .env.example .env.local
 ```

@@ -1,0 +1,230 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String           @id @default(cuid())
+  email         String           @unique
+  name          String?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  resumes       Resume[]
+  applications  Application[]
+  aiUsage       AIUsage[]
+  auditLogs     AuditLog[]
+  preferences   UserPreference?
+  subscription  Subscription?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  deletedAt     DateTime?
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Resume {
+  id              String           @id @default(cuid())
+  userId          String
+  title           String
+  targetRole      String?
+  targetCompany   String?
+  sourceFileName  String?
+  originalText    String
+  currentText     String
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  versions        ResumeVersion[]
+  sections        ResumeSection[]
+  analyses        ResumeAnalysis[]
+  suggestions     ResumeSuggestion[]
+  exports         Export[]
+  applications    Application[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  deletedAt       DateTime?
+
+  @@index([userId, deletedAt])
+}
+
+model ResumeVersion {
+  id        String   @id @default(cuid())
+  resumeId  String
+  label     String
+  text      String
+  score     Int
+  kind      String
+  resume    Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model ResumeSection {
+  id        String   @id @default(cuid())
+  resumeId  String
+  type      String
+  title     String
+  content   Json
+  order     Int
+  confidence Float  @default(0.8)
+  resume    Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+}
+
+model ResumeAnalysis {
+  id             String        @id @default(cuid())
+  resumeId       String
+  overallScore   Int
+  potentialScore Int
+  categoryScores Json
+  confidence     Float
+  jobMatch       JobMatch?
+  issues         ResumeIssue[]
+  resume         Resume        @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  createdAt      DateTime      @default(now())
+}
+
+model ResumeIssue {
+  id            String         @id @default(cuid())
+  analysisId    String
+  category      String
+  severity      String
+  title         String
+  explanation   String
+  location      String
+  currentText   String?
+  suggestedText String?
+  requiresConfirmation Boolean @default(false)
+  expectedScoreImpact  Float
+  confidence    Float
+  analysis      ResumeAnalysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+}
+
+model ResumeSuggestion {
+  id            String   @id @default(cuid())
+  resumeId      String
+  type          String
+  originalText  String
+  suggestedText String
+  reason        String
+  accepted      Boolean  @default(false)
+  factualRisk   String
+  resume        Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+}
+
+model JobDescription {
+  id              String     @id @default(cuid())
+  userId          String
+  title           String?
+  company         String?
+  text            String
+  extractedData   Json
+  matches         JobMatch[]
+  createdAt       DateTime   @default(now())
+}
+
+model JobMatch {
+  id               String         @id @default(cuid())
+  analysisId        String         @unique
+  jobDescriptionId  String
+  matchPercentage   Int
+  keywordMatrix     Json
+  analysis          ResumeAnalysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+  jobDescription    JobDescription @relation(fields: [jobDescriptionId], references: [id], onDelete: Cascade)
+}
+
+model Export {
+  id        String   @id @default(cuid())
+  resumeId  String
+  format    String
+  filename  String
+  status    String
+  resume    Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Application {
+  id                String   @id @default(cuid())
+  userId            String
+  resumeId          String?
+  company           String
+  role              String
+  jobUrl            String?
+  applicationDate   DateTime?
+  status            String
+  interviewDate     DateTime?
+  notes             String?
+  contactPerson     String?
+  followUpDate      DateTime?
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume            Resume?  @relation(fields: [resumeId], references: [id], onDelete: SetNull)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model AIUsage {
+  id          String   @id @default(cuid())
+  userId      String
+  provider    String
+  model       String
+  promptVersion String
+  inputTokens Int
+  outputTokens Int
+  estimatedCost Float
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  resource  String
+  metadata  Json?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model UserPreference {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  theme     String   @default("system")
+  locale    String   @default("en")
+  settings  Json
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  plan      String
+  status    String
+  renewsAt  DateTime?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

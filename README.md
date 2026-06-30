@@ -1,114 +1,167 @@
-# AI Resume Analyzer
+# ResumeForge AI
 
-A futuristic resume intelligence dashboard that compares student resumes with recruiter job descriptions and gives an ATS-style match report.
+ResumeForge AI is a premium Next.js SaaS application for resume analysis, ATS optimization, job-description matching, factual resume rewriting, before-and-after review, and export.
 
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
-![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B?logo=streamlit&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green)
+**Tagline:** Build a resume that recruiters and ATS systems can understand.
 
-## Features
+## What It Does
 
-- Upload resumes as PDF, DOCX, or TXT files.
-- Paste a target job description.
-- Get an ATS match score, keyword coverage, missing skills, and improvement tips.
-- Review section-wise feedback for impact, brevity, formatting, experience, education, skills, projects, and certifications.
-- Export an improved resume draft with targeted keywords and rewrite guidance.
-- Run the core analyzer without any paid API key.
+- Upload or paste PDF, DOCX, or TXT resume content.
+- Add an optional target job description.
+- Parse resume content into editable sections.
+- Score the resume using a transparent internal 100-point ATS rubric.
+- Detect missing keywords, weak bullets, formatting issues, contact gaps, and ATS parseability risks.
+- Generate safe rewrite suggestions without inventing facts.
+- Mark risky job-match suggestions as requiring user confirmation.
+- Show before-and-after comparisons for every meaningful change.
+- Recalculate optimized and potential scores.
+- Export TXT, JSON, DOCX, and print-to-PDF from the browser.
+- Provide dashboard, auth demo screens, application tracker, security page, and documentation.
 
-## Requirements
+## Technology Stack
 
-- Python 3.10 or newer
-- Git
-- Internet connection for the first dependency install
+- Next.js App Router
+- TypeScript
+- React
+- CSS design system inspired by Tailwind/shadcn patterns
+- Zustand for editor state
+- Zod validation
+- Lucide icons
+- Framer Motion ready
+- Recharts ready
+- Prisma schema for PostgreSQL
+- Mammoth for DOCX extraction
+- pdf-parse for PDF extraction
+- docx for DOCX export
+- Vitest for unit tests
 
-## Quick Start
-
-Clone the repository:
+## Local Setup
 
 ```bash
 git clone https://github.com/aksse01/AI-Resume-Analyzer-.git
 cd AI-Resume-Analyzer-
+npm install
+copy .env.example .env.local
+npx prisma generate
+npm run dev
 ```
 
-Install dependencies and run with one command:
-
-```bash
-python run.py --install
-```
-
-Open the local URL shown by Streamlit, usually:
+Open:
 
 ```text
-http://localhost:8501
+http://localhost:3000
 ```
 
-## Windows Setup
-
-PowerShell:
+## Windows Scripts
 
 ```powershell
-git clone https://github.com/aksse01/AI-Resume-Analyzer-.git
-cd AI-Resume-Analyzer-
 .\scripts\setup_windows.ps1
 .\scripts\run_windows.ps1
 ```
 
-If PowerShell blocks scripts, run:
+If PowerShell blocks scripts:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\scripts\setup_windows.ps1
-.\scripts\run_windows.ps1
 ```
 
-## macOS/Linux Setup
+## macOS/Linux Scripts
 
 ```bash
-git clone https://github.com/aksse01/AI-Resume-Analyzer-.git
-cd AI-Resume-Analyzer-
 chmod +x scripts/*.sh
 ./scripts/setup_unix.sh
 ./scripts/run_unix.sh
 ```
 
-## Manual Setup
+## Environment Variables
+
+See `.env.example`.
+
+Important variables:
+
+- `DATABASE_URL`
+- `NEXT_PUBLIC_APP_URL`
+- `AI_PROVIDER`
+- `AI_MODEL`
+- `AI_TIMEOUT_MS`
+- `RESUME_FILE_MAX_MB`
+- `DEMO_MODE_ENABLED`
+- `AUTH_MODE`
+
+## Development Commands
 
 ```bash
-python -m venv .venv
-
-# Windows
-.venv\Scripts\activate
-
-# macOS/Linux
-source .venv/bin/activate
-
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-streamlit run app.py
+npm run dev
+npm run test
+npm run typecheck
+npm run build
+npx prisma generate
+npx prisma migrate dev
 ```
 
-## Sample Job Description
+## Main Routes
 
-The file `sample_job_description.txt` contains a ready-to-paste sample job description for testing the app quickly.
+- `/` - Landing page
+- `/dashboard` - Resume dashboard
+- `/resumes/new` - Upload, analyze, improve, compare, export workflow
+- `/applications` - Application tracker
+- `/sign-in`, `/sign-up`, `/password-reset`, `/email-verification`
+- `/security`, `/privacy`, `/terms`, `/docs`
 
-## Test
-
-```bash
-python -m unittest discover -s tests
-```
-
-## Project Structure
+## Repository Structure
 
 ```text
-app.py                 Futuristic Streamlit dashboard
-run.py                 Cross-platform launcher and dependency checker
-resume_analyzer.py     Resume parsing and scoring logic
-sample_job_description.txt
-scripts/               Windows and macOS/Linux setup/run scripts
-tests/                 Unit tests for the analyzer
-requirements.txt       Python dependencies
+src/
+  app/
+    api/
+    dashboard/
+    resumes/
+  components/
+    resume/
+    ui/
+  data/
+  features/
+    analysis/
+    export/
+    resumes/
+  lib/
+    ai/
+    files/
+  stores/
+  types/
+prisma/
+docs/
+tests/
+scripts/
 ```
 
-## Troubleshooting
+## Security And Factual Integrity
 
-See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) for common setup fixes.
+ResumeForge AI does not:
+
+- Guarantee interviews.
+- Claim compatibility with every external ATS.
+- Invent companies, dates, education, skills, tools, metrics, or achievements.
+- Add hidden keywords or white-text keyword stuffing.
+- Export unresolved placeholders.
+
+Uploaded resume and job-description text are treated as untrusted input.
+
+## Known Limitations
+
+- Authentication is currently demo-mode UI. Production deployments should connect Auth.js, Clerk, or Supabase Auth.
+- Prisma schema is ready, but local demo mode does not require a running database.
+- External AI calls are abstracted but default to deterministic demo mode.
+- PDF export is handled through browser print-to-PDF. TXT, JSON, and DOCX use API exports.
+- Redis queues, object storage, malware scanning, subscriptions, and hosted audit logging are documented architecture hooks, not enabled by default.
+
+## Documentation
+
+- [Implementation Plan](docs/IMPLEMENTATION_PLAN.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [AI Prompts](docs/AI_PROMPTS.md)
+- [Security](docs/SECURITY.md)
+- [Deployment](docs/DEPLOYMENT.md)
+- [Contributing](docs/CONTRIBUTING.md)
+- [Troubleshooting](docs/TROUBLESHOOTING.md)
