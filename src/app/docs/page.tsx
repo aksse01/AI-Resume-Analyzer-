@@ -7,7 +7,7 @@ export default function DocsPage() {
       <p className="section-lead">Start with the repository docs for setup, architecture, AI prompts, security, deployment, and contribution guidance.</p>
       <div className="row">
         {["/docs/ARCHITECTURE.md", "/docs/SECURITY.md", "/docs/AI_PROMPTS.md", "/docs/DEPLOYMENT.md"].map((doc) => (
-          <Link className="button" href="https://github.com/aksse01/AI-Resume-Analyzer-" key={doc}>{doc}</Link>
+          <Link className="button" href="https://github.com/aksse01/ResumeX" key={doc}>{doc}</Link>
         ))}
       </div>
     </main>

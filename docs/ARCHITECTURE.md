@@ -1,6 +1,6 @@
 # Architecture
 
-KindlyCV AI is now structured as a Next.js App Router application with TypeScript.
+ResumeX is now structured as a Next.js App Router application with TypeScript.
 
 ## Layers
 

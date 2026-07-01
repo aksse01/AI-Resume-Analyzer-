@@ -1,6 +1,6 @@
-# KindlyCV AI
+# ResumeX
 
-KindlyCV AI is a premium Next.js SaaS application for resume analysis, ATS optimization, job-description matching, factual resume rewriting, before-and-after review, and export.
+ResumeX is a premium Next.js SaaS application for resume analysis, ATS optimization, job-description matching, factual resume rewriting, before-and-after review, and export.
 
 **Tagline:** Build a resume that recruiters and ATS systems can understand.
 
@@ -39,8 +39,8 @@ KindlyCV AI is a premium Next.js SaaS application for resume analysis, ATS optim
 ## Local Setup
 
 ```bash
-git clone https://github.com/aksse01/AI-Resume-Analyzer-.git
-cd AI-Resume-Analyzer-
+git clone https://github.com/aksse01/ResumeX.git
+cd ResumeX
 npm install
 copy .env.example .env.local
 npx prisma generate
@@ -139,7 +139,7 @@ scripts/
 
 ## Security And Factual Integrity
 
-KindlyCV AI does not:
+ResumeX does not:
 
 - Guarantee interviews.
 - Claim compatibility with every external ATS.

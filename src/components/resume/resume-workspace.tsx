@@ -13,14 +13,14 @@ async function downloadExport(payload: AnalysisPayload, format: "txt" | "json" |
   const response = await fetch("/api/resumes/export", {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ payload, format, filename: `${payload.resume.contact.fullName || "Resume"}_KindlyCV_AI` })
+    body: JSON.stringify({ payload, format, filename: `${payload.resume.contact.fullName || "Resume"}_ResumeX` })
   });
   if (!response.ok) throw new Error("Export failed.");
   const blob = await response.blob();
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `${payload.resume.contact.fullName || "Resume"}_KindlyCV_AI.${format}`;
+  link.download = `${payload.resume.contact.fullName || "Resume"}_ResumeX.${format}`;
   link.click();
   URL.revokeObjectURL(url);
 }
@@ -198,7 +198,7 @@ export function ResumeWorkspace() {
                   <div className="diff-box diff-after"><strong>Suggested</strong><p>{suggestion.suggestedText}</p></div>
                 </div>
                 <p>{suggestion.reason}</p>
-                {suggestion.requiresConfirmation ? <p style={{ color: "var(--amber)" }}>Needs confirmation before export. KindlyCV AI will not add this as fact automatically.</p> : null}
+                {suggestion.requiresConfirmation ? <p style={{ color: "var(--amber)" }}>Needs confirmation before export. ResumeX will not add this as fact automatically.</p> : null}
                 <div className="row">
                   <button className="button button-primary" onClick={() => updateSuggestion(suggestion.id, true)} disabled={suggestion.requiresConfirmation}>
                     {suggestion.accepted ? "Accepted" : "Accept"}

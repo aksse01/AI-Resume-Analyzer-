@@ -4,7 +4,7 @@ import { FileText, ShieldCheck } from "lucide-react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "KindlyCV AI",
+  title: "ResumeX",
   description: "Build a resume that recruiters and ATS systems can understand."
 };
 
@@ -19,7 +19,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <span className="brand-mark" aria-hidden="true">
                   <FileText size={20} />
                 </span>
-                <span>KindlyCV AI</span>
+                <span>ResumeX</span>
               </Link>
               <nav className="nav-links" aria-label="Main navigation">
                 <Link href="/dashboard">Dashboard</Link>

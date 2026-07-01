@@ -1,8 +1,8 @@
 {
-  "name": "kindlycv-ai",
+  "name": "resumex",
   "version": "1.0.0",
   "private": true,
-  "description": "KindlyCV AI - ATS resume analyzer, optimizer, editor, and export workflow.",
+  "description": "ResumeX - ATS resume analyzer, optimizer, editor, and export workflow.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

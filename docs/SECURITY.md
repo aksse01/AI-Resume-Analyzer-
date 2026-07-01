@@ -1,6 +1,6 @@
 # Security
 
-KindlyCV AI treats resumes and job descriptions as sensitive untrusted content.
+ResumeX treats resumes and job descriptions as sensitive untrusted content.
 
 ## Implemented
 

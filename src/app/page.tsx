@@ -19,7 +19,7 @@ const features = [
 ];
 
 const faq = [
-  ["Does KindlyCV AI guarantee interviews?", "No. It improves clarity, keyword alignment, and ATS readability, but hiring decisions depend on many external factors."],
+  ["Does ResumeX guarantee interviews?", "No. It improves clarity, keyword alignment, and ATS readability, but hiring decisions depend on many external factors."],
   ["Will it fabricate achievements?", "No. Unverified skills, metrics, dates, and accomplishments are converted into confirmation questions."],
   ["Can I use it without an AI key?", "Yes. Demo mode uses deterministic local analysis and safe rewrite rules."],
   ["Is the score an external ATS score?", "No. It is a transparent internal rubric designed to explain strengths and weaknesses."]
@@ -34,7 +34,7 @@ export default function LandingPage() {
             <div className="eyebrow">Build a resume that recruiters and ATS systems can understand.</div>
             <h1>Turn your resume into an ATS-ready job application.</h1>
             <p>
-              Upload your resume, match it to a job description, and let KindlyCV AI improve structure,
+              Upload your resume, match it to a job description, and let ResumeX improve structure,
               keywords, bullet points, readability, and impact while preserving factual integrity.
             </p>
             <div className="hero-actions">
@@ -44,7 +44,7 @@ export default function LandingPage() {
               <LinkButton href="/dashboard">View Demo</LinkButton>
             </div>
             <p className="trust-note">
-              KindlyCV AI never invents education, employers, dates, certifications, metrics, or skills.
+              ResumeX never invents education, employers, dates, certifications, metrics, or skills.
             </p>
           </div>
 

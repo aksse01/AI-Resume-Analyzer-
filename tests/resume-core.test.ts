@@ -5,7 +5,7 @@ import { parseResumeText } from "@/features/resumes/parser";
 import { findSkills, normalizeSkillName } from "@/features/resumes/skill-taxonomy";
 import { demoJobDescription, demoResumeText } from "@/data/demo";
 
-describe("KindlyCV AI core workflow", () => {
+describe("ResumeX core workflow", () => {
   it("normalizes common skill aliases", () => {
     expect(normalizeSkillName("React.js")).toBe("react");
     expect(normalizeSkillName("PowerBI")).toBe("power bi");
